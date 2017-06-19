@@ -75,7 +75,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
     v=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v  | grep -Eo '[0-9].+' | awk 'END {print}' `
 
     if [ -z $v ]; then
-        echo "找不到${v}版本node"
+        echo "找不到${2}版本node"
         exit
     fi
     
