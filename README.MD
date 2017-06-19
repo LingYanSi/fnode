@@ -1,6 +1,11 @@
 # inode
 一个轻量级node版本管理器
 
+## 安装
+```bash
+curl https://lingyansi.github.io/inode/inode-install.sh | bash
+```
+
 ## 使用
 - inode i 8         安装node 8最新版本
 - inode use 8       使用node 8最新版本
