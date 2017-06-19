@@ -69,8 +69,13 @@ if [ "$1" == "use" ]; then
 elif [[ "$1" == "i" || "$1" == "install" ]]; then
     v=$2
     # 判断是否指定了版本号，如果没有指定则去下载最新版本node
-    v=`curl $mirror | grep -Eo '>v(\d\.?)+' | grep v$v  | grep -Eo '\d.+' | awk 'END {print}' `
+    v=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v  | grep -Eo '\d.+' | awk 'END {print}' `
 
+    if [ -z $v ]; then
+        echo "找不到${v}版本node"
+        exit
+    fi
+    
     version="v$v"
 
     downloadUrl="${mirror}/${version}/node-${version}-darwin-x64.tar.gz"
@@ -92,7 +97,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
 
     if [ -d $version ]; then
         echo "移除已存在${version}文件夹"
-        rm -r $version
+        \rm -r $version
     fi
     # 修改文件名
     mv -f $filename $version
@@ -101,7 +106,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
     lnNode $version
 
     # 删除压缩包
-    rm $untarname
+    \rm $untarname
     # https://npm.taobao.org/mirrors/node/v8.1.0/node-v8.1.0-darwin-x64.tar.gz
 
 elif [ "$1" == "default" ]; then
@@ -119,12 +124,12 @@ elif [ "$1" == "lsr" ]; then
 elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
     # 指定了版本号，就移除指定版本号
     if [[ $2 && "$2" == "all" ]]; then
-        sudo rm -r $path
+        \rm -r $path
         exit
     fi
 
     if [ -d "v$2" ]; then
-        rm -r "v$2" && echo "v$2 node已卸载"
+        \rm -r "v$2" && echo "v$2 node已卸载"
 
         # 卸载后，把node切换最新版本
         v=`inode ls | grep -Eo '\d.+' | awk 'END {print}'`

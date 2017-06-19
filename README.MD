@@ -12,3 +12,6 @@ curl https://lingyansi.github.io/inode/inode-install.sh | bash
 - inode un 8.1.2    卸载8.1.2版本
 - inode ls          查看本地所有版本
 - inode lsr         查看已发布的所有版本
+
+## 多平台
+目前支持mac、linux
