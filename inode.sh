@@ -4,6 +4,9 @@
 # node镜像
 mirror=https://npm.taobao.org/mirrors/node
 
+# 获取平台 转小写
+os=`uname | awk '{print tolower($0)}'`
+
 # 定义node文件夹
 nodeDir=~/me/node
 
@@ -41,7 +44,7 @@ if [ "$1" == "use" ]; then
         echo "本地未安装 v$2 版本node"
 
         # 查找线上指定最新最新版本node
-        lastV=`curl $mirror | grep -Eo '>v(\d\.?)+' | grep v$2 | grep -Eo '\d.+' | awk 'END {print}' `
+        lastV=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$2 | grep -Eo '[0-9].+' | awk 'END {print}' `
         if [ $lastV ]; then
             # 是否安装
             echo "是否安装 v$lastV 版本node: y/n"
@@ -78,7 +81,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
     
     version="v$v"
 
-    downloadUrl="${mirror}/${version}/node-${version}-darwin-x64.tar.gz"
+    downloadUrl="${mirror}/${version}/node-${version}-${os}-x64.tar.gz"
 
     echo "$version --> $downloadUrl"
 
@@ -87,7 +90,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
     # 解压后文件吗
     filename=$(echo $untarname | sed -E 's/\.tar.+//')
 
-    version=`echo $filename | grep -Eo 'v(\d\.?)+'`
+    version=`echo $filename | grep -Eo 'v([0-9]\.?)+'`
 
     # 下载
     wget $downloadUrl
@@ -97,7 +100,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
 
     if [ -d $version ]; then
         echo "移除已存在${version}文件夹"
-        \rm -r $version
+        rm -r $version
     fi
     # 修改文件名
     mv -f $filename $version
@@ -106,7 +109,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
     lnNode $version
 
     # 删除压缩包
-    \rm $untarname
+    rm $untarname
     # https://npm.taobao.org/mirrors/node/v8.1.0/node-v8.1.0-darwin-x64.tar.gz
 
 elif [ "$1" == "default" ]; then
@@ -119,20 +122,20 @@ elif [ "$1" == "ls" ]; then
 
 elif [ "$1" == "lsr" ]; then
     echo "node已发布版本 >"
-    curl https://npm.taobao.org/mirrors/node | grep -Eo '>v(\d\.?)+' | grep -Eo '\d.+'
+    curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep -Eo '[0-9].+'
 
 elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
     # 指定了版本号，就移除指定版本号
     if [[ $2 && "$2" == "all" ]]; then
-        \rm -r $path
+        rm -r $path
         exit
     fi
 
     if [ -d "v$2" ]; then
-        \rm -r "v$2" && echo "v$2 node已卸载"
+        rm -r "v$2" && echo "v$2 node已卸载"
 
         # 卸载后，把node切换最新版本
-        v=`inode ls | grep -Eo '\d.+' | awk 'END {print}'`
+        v=`inode ls | grep -Eo '[0-9].+' | awk 'END {print}'`
         inode use $v
     else
         echo "版本号为空，或者$2版本不存在"
