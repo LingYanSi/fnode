@@ -69,7 +69,7 @@ if [ "$1" == "use" ]; then
 elif [[ "$1" == "i" || "$1" == "install" ]]; then
     v=$2
     # 判断是否指定了版本号，如果没有指定则去下载最新版本node
-    v=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v  | grep -Eo '\d.+' | awk 'END {print}' `
+    v=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v  | grep -Eo '[0-9].+' | awk 'END {print}' `
 
     if [ -z $v ]; then
         echo "找不到${v}版本node"
