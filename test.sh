@@ -1,8 +1,8 @@
 #!/bin/bash
 
-path=`pwd`
+# 用于本地开发
 
-echo $path
+path=`pwd` 
 
 ln -sf ${path}/inode.sh /usr/local/bin/inode
 

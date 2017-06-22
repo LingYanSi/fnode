@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# 待补充 使用use i default
+# . ./color.sh
+
 # node镜像
 mirror=https://npm.taobao.org/mirrors/node
 
@@ -29,7 +30,6 @@ lnNode(){
 if [ "$1" == "use" ]; then
     # 使用. ./bash.sh执行shell文件，命令会在一个sub-shell环境内执行
     # 执行完毕后alias并不会被保存，如果想让命令被保存，则必须要把命令保存在 ~/.bashrc | ~/.zshrc | ~/.profile内
-    #
 
     if [ -z $2 ]; then
         echo "版本号不能为空"
@@ -78,7 +78,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
         echo "找不到${2}版本node"
         exit
     fi
-    
+
     version="v$v"
 
     downloadUrl="${mirror}/${version}/node-${version}-${os}-x64.tar.gz"
@@ -141,17 +141,15 @@ elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
         echo "版本号为空，或者$2版本不存在"
     fi
 
+elif [[ "$1" == "upgrade" ]]; then
+    curl https://lingyansi.github.io/inode/inode-install.sh | bash
+
 elif [[ "$1" == "--help" || -z $1 ]]; then
-    echo "inode 一个轻量级node版本管理器"
+    cEcho "inode 一个轻量级node版本管理器" "bgd: cyan;"
     echo "use version     使用指定版本node"
     echo "i   version     安装指定版本node"
     echo "un  version     卸载指定版本node"
     echo "ls  version     查看已安装node"
     echo "lsr version     查看已发布node"
+    echo "upgrade         升级inode"
 fi
-
-exit
-
-# wget -O /usr/local/bin/inode http://172.16.24.200:8964/shell/inode
-
-# curl http://172.16.24.200:8964/shell/inode-install.sh | bash
