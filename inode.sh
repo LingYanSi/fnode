@@ -145,7 +145,7 @@ elif [[ "$1" == "upgrade" ]]; then
     curl https://lingyansi.github.io/inode/inode-install.sh | bash
 
 elif [[ "$1" == "--help" || -z $1 ]]; then
-    cEcho "inode 一个轻量级node版本管理器" "bgd: cyan;"
+    echo "inode 一个轻量级node版本管理器"
     echo "use version     使用指定版本node"
     echo "i   version     安装指定版本node"
     echo "un  version     卸载指定版本node"
