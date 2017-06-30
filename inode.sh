@@ -18,6 +18,7 @@ cd $nodeDir
 # 获取当前路径
 path=`pwd`
 
+# 软连
 lnNode(){
     if [ -d $1 ]; then
         # 软连
@@ -25,6 +26,11 @@ lnNode(){
         ln -sf ${path}/${1}/bin/node /usr/local/bin/node
         echo "node已切换到${1}版本"
     fi
+}
+
+# 处理版本号
+handleV(){
+    echo `echo $1 |sed -E 's/v|V//'`
 }
 
 if [ "$1" == "use" ]; then
@@ -36,15 +42,16 @@ if [ "$1" == "use" ]; then
         exit
     fi
 
+    v=`handleV $2`
     # 查找指定最新版本node
-    v=`inode ls | grep v$2 | awk 'END {print}'`
+    v=`inode ls | grep v$v | awk 'END {print}'`
 
     # 判断有没有在本地找到
     if [ -z $v ]; then
-        echo "本地未安装 v$2 版本node"
+        echo "本地未安装 v$v 版本node"
 
         # 查找线上指定最新最新版本node
-        lastV=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$2 | grep -Eo '[0-9].+' | awk 'END {print}' `
+        lastV=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v | grep -Eo '[0-9].+' | awk 'END {print}' `
         if [ $lastV ]; then
             # 是否安装
             echo "是否安装 v$lastV 版本node: y/n"
@@ -53,7 +60,7 @@ if [ "$1" == "use" ]; then
                 inode i $lastV
             fi
         else
-            echo "v$2 版本node未发布过"
+            echo "v$v 版本node未发布过"
         fi
         exit
     fi
@@ -70,12 +77,12 @@ if [ "$1" == "use" ]; then
     # echo "alias npm=${path}/${version}/bin/npm" >> ~/.zshrc
 
 elif [[ "$1" == "i" || "$1" == "install" ]]; then
-    v=$2
+    v=`handleV $2`
     # 判断是否指定了版本号，如果没有指定则去下载最新版本node
     v=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v  | grep -Eo '[0-9].+' | awk 'END {print}' `
 
     if [ -z $v ]; then
-        echo "找不到${2}版本node"
+        echo "找不到${v}版本node"
         exit
     fi
 
@@ -131,14 +138,15 @@ elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
         exit
     fi
 
-    if [ -d "v$2" ]; then
-        rm -r "v$2" && echo "v$2 node已卸载"
+    v=`handleV $2`
+    if [ -d "v$v" ]; then
+        rm -r "v$v" && echo "v$v node已卸载"
 
         # 卸载后，把node切换最新版本
         v=`inode ls | grep -Eo '[0-9].+' | awk 'END {print}'`
         inode use $v
     else
-        echo "版本号为空，或者$2版本不存在"
+        echo "版本号为空，或者 v${v} 版本不存在"
     fi
 
 elif [[ "$1" == "upgrade" ]]; then

@@ -1,5 +1,5 @@
 # inode
-一个轻量级node版本管理器
+轻量级node版本管理器
 
 ## 安装
 ```bash
@@ -14,4 +14,4 @@ curl https://lingyansi.github.io/inode/inode-install.sh | bash
 - inode lsr         查看已发布的所有版本
 
 ## 多平台
-目前支持mac、linux
+支持mac、linux
