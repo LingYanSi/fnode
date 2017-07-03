@@ -9,7 +9,7 @@ mirror=https://npm.taobao.org/mirrors/node
 os=`uname | awk '{print tolower($0)}'`
 
 # 定义node文件夹
-nodeDir=~/me/node
+nodeDir=~/.inode
 
 mkdir -p $nodeDir
 
