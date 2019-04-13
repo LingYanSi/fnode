@@ -24,6 +24,7 @@ lnNode(){
         # 软连
         ln -sf ${path}/${1}/bin/npm /usr/local/bin/npm
         ln -sf ${path}/${1}/bin/node /usr/local/bin/node
+        ln -sf ${path}/${1}/bin/npx /usr/local/bin/npx
         echo "node已切换到${1}版本"
     fi
 }
