@@ -125,11 +125,11 @@ elif [ "$1" == "default" ]; then
 
 elif [ "$1" == "ls" ]; then
     echo "node已安装版本:"
-    ls $nodeDir
+    ls $nodeDir | sort -n
 
 elif [ "$1" == "lsr" ]; then
     echo "node已发布版本 >"
-    curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep -Eo '[0-9].+'
+    curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep -Eo '[0-9].+' | sort -n
 
 elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
     # 指定了版本号，就移除指定版本号
