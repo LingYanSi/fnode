@@ -15,3 +15,24 @@ curl https://lingyansi.github.io/inode/inode-install.sh | bash
 
 ## 多平台
 支持mac、linux
+
+## 常见问题
+
+配置PATH
+有些linux服务器因为 `/user/local/bin` 不在path里面，导致找不到inode命令，可以通过`vim ~/.bash_profile`来新增PATH
+```
+PATH=$PATH:/user/local/bin
+```
+
+安装完node后，使用npm安装后会发现另一个问题，安装的全部包找不到命令，是因为npm全局安装包存放的位置不在PATH内
+```
+touch ~/.npmrc
+```
+
+prefix用来指定全局安装包的位置
+```npmrc
+prefix=/usr/local
+registry=https://registry.npm.taobao.org/
+phantomjs_cdnurl=http://cnpmjs.org/downloads
+sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
+```
