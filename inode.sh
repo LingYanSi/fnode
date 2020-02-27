@@ -4,6 +4,7 @@
 
 # node镜像
 mirror=https://npm.taobao.org/mirrors/node
+installPre=https://nodejs.org/dist
 
 # 获取平台 转小写
 os=`uname | awk '{print tolower($0)}'`
@@ -89,7 +90,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
 
     version="v$v"
 
-    downloadUrl="${mirror}/${version}/node-${version}-${os}-x64.tar.gz"
+    downloadUrl="${installPre}/${version}/node-${version}-${os}-x64.tar.gz"
 
     echo "$version --> $downloadUrl"
 
