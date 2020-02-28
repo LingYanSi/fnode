@@ -4,6 +4,7 @@
 
 # node镜像
 mirror=https://npm.taobao.org/mirrors/node
+# 使用官方下载地址安装
 installPre=https://nodejs.org/dist
 
 # 获取平台 转小写
