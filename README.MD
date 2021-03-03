@@ -8,6 +8,7 @@ curl https://lingyansi.github.io/inode/inode-install.sh | bash
 
 ## 使用
 - fnode i 8         安装node 8最新版本
+- fnode i 8 --origin  使用官方源安装node 8最新版本
 - fnode use 8       使用node 8最新版本
 - fnode un 8.1.2    卸载8.1.2版本
 - fnode ls          查看本地所有版本
