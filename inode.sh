@@ -5,7 +5,13 @@
 # node镜像
 mirror=https://npm.taobao.org/mirrors/node
 # 使用官方下载地址安装
-installPre=https://nodejs.org/dist
+installPre=$mirror
+
+if [ "$3" == "--origin" ]; then
+    installPre=https://nodejs.org/dist
+    echo "使用官方源"
+    echo $installPre
+fi
 
 # 获取平台 转小写
 os=`uname | awk '{print tolower($0)}'`
