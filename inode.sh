@@ -60,7 +60,7 @@ if [ "$1" == "use" ]; then
         echo "本地未安装 v$v 版本node"
 
         # 查找线上指定最新最新版本node
-        lastV=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v | grep -Eo '[0-9].+' | awk 'END {print}' `
+        lastV=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v. | grep -Eo '[0-9].+' | sort -V | awk 'END {print}' `
         if [ $lastV ]; then
             # 是否安装
             echo "是否安装 v$lastV 版本node: y/n"
@@ -134,11 +134,11 @@ elif [ "$1" == "default" ]; then
 
 elif [ "$1" == "ls" ]; then
     echo "node已安装版本:"
-    ls $nodeDir | sort -n
+    ls $nodeDir | sort -V
 
 elif [ "$1" == "lsr" ]; then
     echo "node已发布版本 >"
-    curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep -Eo '[0-9].+' | sort -n
+    curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep -Eo '[0-9].+' | sort -V
 
 elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
     # 指定了版本号，就移除指定版本号
