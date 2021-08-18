@@ -17,7 +17,7 @@ fi
 os=`uname | awk '{print tolower($0)}'`
 
 # 定义node文件夹
-nodeDir=~/.inode
+nodeDir=~/.fnode
 
 mkdir -p $nodeDir
 
@@ -53,7 +53,7 @@ if [ "$1" == "use" ]; then
 
     v=`handleV $2`
     # 查找指定最新版本node
-    v=`inode ls | grep v$v | awk 'END {print}'`
+    v=`fnode ls | grep v$v | awk 'END {print}'`
 
     # 判断有没有在本地找到
     if [ -z $v ]; then
@@ -66,7 +66,7 @@ if [ "$1" == "use" ]; then
             echo "是否安装 v$lastV 版本node: y/n"
             read yes
             if [ "$yes" == "y" ]; then
-                inode i $lastV
+                fnode i $lastV
             fi
         else
             echo "v$v 版本node未发布过"
@@ -130,7 +130,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
 
 elif [ "$1" == "default" ]; then
     echo "设置系统默认node:"
-    inode use $2
+    fnode use $2
 
 elif [ "$1" == "ls" ]; then
     echo "node已安装版本:"
@@ -152,8 +152,8 @@ elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
         rm -r "v$v" && echo "v$v node已卸载"
 
         # 卸载后，把node切换最新版本
-        v=`inode ls | grep -Eo '[0-9].+' | awk 'END {print}'`
-        inode use $v
+        v=`fnode ls | grep -Eo '[0-9].+' | awk 'END {print}'`
+        fnode use $v
     else
         echo "版本号为空，或者 v${v} 版本不存在"
     fi
@@ -161,12 +161,12 @@ elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
 elif [[ "$1" == "upgrade" ]]; then
     curl https://lingyansi.github.io/inode/inode-install.sh | bash
 
-elif [[ "$1" == "--help" || -z $1 ]]; then
-    echo "inode 一个轻量级node版本管理器"
+elif [[ "$1" == "--help" || "$1" == "-h" || -z $1 ]]; then
+    echo "fnode 一个轻量级node版本管理器"
     echo "use version     使用指定版本node"
     echo "i   version     安装指定版本node"
     echo "un  version     卸载指定版本node"
     echo "ls  version     查看已安装node"
     echo "lsr version     查看已发布node"
-    echo "upgrade         升级inode"
+    echo "upgrade         升级fnode"
 fi
