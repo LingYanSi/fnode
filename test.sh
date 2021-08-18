@@ -2,8 +2,8 @@
 
 # 用于本地开发
 
-path=`pwd` 
+path=`pwd`
 
-ln -sf ${path}/inode.sh /usr/local/bin/inode
+ln -sf ${path}/fnode.sh /usr/local/bin/fnode
 
-chmod 777 /usr/local/bin/inode
+chmod 777 /usr/local/bin/fnode

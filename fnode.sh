@@ -159,7 +159,7 @@ elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
     fi
 
 elif [[ "$1" == "upgrade" ]]; then
-    curl https://lingyansi.github.io/inode/inode-install.sh | bash
+    curl https://lingyansi.github.io/fnode/fnode-install.sh | bash
 
 elif [[ "$1" == "--help" || "$1" == "-h" || -z $1 ]]; then
     echo "fnode 一个轻量级node版本管理器"

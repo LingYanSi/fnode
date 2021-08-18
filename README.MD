@@ -3,7 +3,7 @@
 
 ## 安装
 ```bash
-curl https://lingyansi.github.io/inode/inode-install.sh | bash
+curl https://lingyansi.github.io/fnode/fnode-install.sh | bash
 ```
 
 ## 使用
