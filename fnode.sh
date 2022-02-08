@@ -3,7 +3,8 @@
 # . ./color.sh
 
 # node镜像
-mirror=https://npm.taobao.org/mirrors/node
+#mirror=https://npm.taobao.org/mirrors/node
+mirror=https://registry.npmmirror.com/-/binary/node
 # 使用官方下载地址安装
 installPre=$mirror
 
@@ -17,7 +18,7 @@ fi
 os=`uname | awk '{print tolower($0)}'`
 
 # 定义node文件夹
-nodeDir=~/.fnode
+nodeDir=~/.inode
 
 mkdir -p $nodeDir
 
@@ -60,7 +61,7 @@ if [ "$1" == "use" ]; then
         echo "本地未安装 v$v 版本node"
 
         # 查找线上指定最新最新版本node
-        lastV=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v. | grep -Eo '[0-9].+' | sort -V | awk 'END {print}' `
+        lastV=`curl $mirror | grep -Eo 'v(\d+\.?)+' | grep v$v. | grep -Eo '\d+(\.\d+)+' | uniq | sort -V | awk 'END {print}' `
         if [ $lastV ]; then
             # 是否安装
             echo "是否安装 v$lastV 版本node: y/n"
@@ -88,7 +89,7 @@ if [ "$1" == "use" ]; then
 elif [[ "$1" == "i" || "$1" == "install" ]]; then
     v=`handleV $2`
     # 判断是否指定了版本号，如果没有指定则去下载最新版本node
-    v=`curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep v$v  | grep -Eo '[0-9].+' | sort -V | awk 'END {print}' `
+    v=`curl $mirror | grep -Eo 'v(\d\.?)+' | grep v$v | grep -Eo '\d+(\.\d+)+' | uniq | sort -V | awk 'END {print}' `
 
     if [ -z $v ]; then
         echo "找不到${v}版本node"
@@ -138,7 +139,7 @@ elif [ "$1" == "ls" ]; then
 
 elif [ "$1" == "lsr" ]; then
     echo "node已发布版本 >"
-    curl $mirror | grep -Eo '>v([0-9]\.?)+' | grep -Eo '[0-9].+' | sort -V
+    curl $mirror | grep -Eo 'v(\d+\.?)+' | grep -Eo '\d+(\.\d+)+' | uniq | sort -V
 
 elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
     # 指定了版本号，就移除指定版本号
@@ -161,7 +162,7 @@ elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
 elif [[ "$1" == "upgrade" ]]; then
     curl https://lingyansi.github.io/fnode/fnode-install.sh | bash
 
-elif [[ "$1" == "--help" || "$1" == "-h" || -z $1 ]]; then
+elif [[ "$1" == "--help" || -z $1 ]]; then
     echo "fnode 一个轻量级node版本管理器"
     echo "use version     使用指定版本node"
     echo "i   version     安装指定版本node"
