@@ -22,7 +22,7 @@ curl https://lingyansi.github.io/fnode/fnode-install.sh | bash
 配置PATH
 有些linux服务器因为 `/usr/local/bin` 不在path里面，导致找不到fnode命令，可以通过`vim ~/.bash_profile`来新增PATH
 ```
-PATH=$PATH:/user/local/bin
+PATH=$PATH:/usr/local/bin
 ```
 
 安装完node后，使用npm安装后会发现另一个问题，安装的全部包找不到命令，是因为npm全局安装包存放的位置不在PATH内
