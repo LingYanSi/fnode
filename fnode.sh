@@ -168,12 +168,12 @@ elif [[ "$1" == "un" || "$1" == "uninstall" ]]; then
 elif [[ "$1" == "upgrade" ]]; then
     curl https://lingyansi.github.io/fnode/fnode-install.sh | bash
 
-elif [[ "$1" == "--help" || -z $1 ]]; then
-    echo "fnode 一个轻量级node版本管理器"
-    echo "use version     使用指定版本node"
-    echo "i   version     安装指定版本node"
-    echo "un  version     卸载指定版本node"
-    echo "ls  version     查看已安装node"
-    echo "lsr version     查看已发布node"
+elif [[ "$1" == "--help" || "$1" == "-h" || -z $1 ]]; then
+    echo "fnode 轻量级nodejs版本工具"
+    echo "use version     使用指定版本nodejs"
+    echo "i   version     安装指定版本nodejs，默认使用淘宝镜像安装，可指定--origin使用官方源安装"
+    echo "un  version     卸载指定版本nodejs"
+    echo "ls  version     查看已安装nodejs"
+    echo "lsr version     查看已发布nodejs"
     echo "upgrade         升级fnode"
 fi
