@@ -16,6 +16,12 @@ fi
 
 # 获取平台 转小写
 os=`uname | awk '{print tolower($0)}'`
+arm64Value=`uname -a | grep -oh arm64`
+
+cpu=x64
+if [ "$arm64Value" == "arm64" ]; then
+    cpu=arm64
+fi
 
 # 定义node文件夹
 nodeDir=~/.inode
@@ -98,7 +104,7 @@ elif [[ "$1" == "i" || "$1" == "install" ]]; then
 
     version="v$v"
 
-    downloadUrl="${installPre}/${version}/node-${version}-${os}-x64.tar.gz"
+    downloadUrl="${installPre}/${version}/node-${version}-${os}-${cpu}.tar.gz"
 
     echo "$version --> $downloadUrl"
 
